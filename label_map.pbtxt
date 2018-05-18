@@ -1,0 +1,72 @@
+item {
+  id: 1
+  name: 'homer_simpson'
+}
+item {
+  id: 2
+  name: 'ned_flanders'
+}
+item {
+  id: 3
+  name: 'moe_szyslak'
+}
+item {
+  id: 4
+  name: 'lisa_simpson'
+}
+item {
+  id: 5
+  name: 'bart_simpson'
+}
+item {
+  id: 6
+  name: 'marge_simpson'
+}
+item {
+  id: 7
+  name: 'krusty_the_clown'
+}
+item {
+  id: 8
+  name: 'principal_skinner'
+}
+item {
+  id: 9
+  name: 'charles_montgomery_burns'
+}
+item {
+  id: 10
+  name: 'milhouse_van_houten'
+}
+item {
+  id: 11
+  name: 'chief_wiggum'
+}
+item {
+  id: 12
+  name: 'abraham_grampa_simpson'
+}
+item {
+  id: 13
+  name: 'sideshow_bob'
+}
+item {
+  id: 14
+  name: 'apu_nahasapeemapetilon'
+}
+item {
+  id: 15
+  name: 'kent_brockman'
+}
+item {
+  id: 16
+  name: 'comic_book_guy'
+}
+item {
+  id: 17
+  name: 'edna_krabappel'
+}
+item {
+  id: 18
+  name: 'nelson_muntz'
+}

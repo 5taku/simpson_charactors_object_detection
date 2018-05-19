@@ -71,9 +71,7 @@ result = result.sample(frac=1)
 train_df = result[int(rate):]
 validate_df = result[:int(rate)]
 train_df.to_csv('./dataset/train.csv',index=None)
-validate_df.to_csv('./dataset/validate.csv',index=None)
-
- 
+validate_df.to_csv('./dataset/validate.csv',index=None 
 ```
 
 simpson_csv.py 파일을 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) Tool 최상단에 위치시킵니다.    
@@ -177,7 +175,6 @@ PATH_TO_CKPT = '../export_dir/faster_rcnn_resnet50_coco_2018_01_28/frozen_infere
 PATH_TO_LABELS = '../label_map.pbtxt'
 
 NUM_CLASSES = 18
-
 ```
 
 #### Download Model section
@@ -217,6 +214,8 @@ IMAGE_SIZE = (12, 8)
 
 #### 결과 확인
 
+전체 결과 이미지는 [여기](https://drive.google.com/file/d/12InWG6qac0zG1mMik4Zyz3Wo2Mvhy-7Q/view?usp=sharing) 에서 확인할 수 있습니다.  
+
 ##### True Detected sample 
 
 ![true](./doc/result_img/true_detect.png) 
@@ -244,7 +243,55 @@ IMAGE_SIZE = (12, 8)
 ![No](./doc/result_img/no_detect_2.png) 
 ![No](./doc/result_img/no_detect_3.png) 
 
-#### 결과 분석
+#### 결과 분석 및 추측
+
+* 아래 이미지의 True, Wrong, No 는 각각 정확한 라벨링을 한경우 , 잘못된 라벨링을 한경우 , 디텍팅을 하지 못한경우 입니다.  
+  널리 알려진 정확도 측정법이 아닌 눈으로 유의미하다고 판단한 자료이므로, 신뢰도 높은 정확도를 측정하려면, 추가 작업이 필요합니다.  
+
+* 또한 아래 분석은 단지 하나의 추측에 불과합니다.  
+  관련하여 잘못된 점에 대한 이야기는 언제든 환영합니다.
 
 ![No](./doc/result_img/summary.jpg) 
 
+트레이닝은 총 5860장의 이미지가 사용되었습니다.  
+
+하지만 클래스별 트레이닝 이미지의 갯수의 비율은 고르지 않습니다.  
+
+18개의 클래스가 동등한 비율이 되려면 각 클래스당 약 5.5% 비율이 되어야 하지만 비중있는 캐릭터가 더 많은 비율을 차지합니다.  
+
+( 조연은 웁니다...ㅜ )  
+
+대다수의 4% 미만의 데이터의 디텍팅결과는 50% 미만입니다.  
+이중에서 3.2%의 트레이닝 비율이지만 정확도는 60%인 edna_krabappel에 대하여 한번 알아보겠습니다.  
+
+![No](./doc/result_img/edna_krabappel.jpg) 
+
+edna_krabappel 캐릭터는 사진에서 보이는 바와 같이, 다른 심슨캐릭보다는 좀더 눈에 띄는 특징이 있습니다.  
+무엇인지 아시겠나요?  
+헤어스타일입니다.  
+
+여타 다른 캐릭보다는 좀더 뚜렷한 특징이 정확도를 높게 나오게 하지 않았나 추측해봅니다.  
+
+반대로 charles_montgomery_burns는 9.56%의 높은 이미지 갯수에도 불구하고 정확도는 상당히 떨어집니다.  
+
+![No](./doc/result_img/charles_montgomery_burns.jpg) 
+
+시각적으로 보았을땐, 여러가지 특징이 발견되지만 결과가 좋지 않습니다.  
+운이 없게 charles_montgomery_burns의 test 데이터가 판별하기 어려운 데이터 였을수도 있습니다.  
+
+#### TO-DO 정확도 향상
+
+위의 가설이 맞는지 증명하기 위해선, 또 정확도를 향상시키기 위해선 여러 방법이 존재할것입니다.
+
+정확도를 높이기 위하여 당장 생각나는 방법으로는   
+
+1. Training 모델의 변경  
+2. Training step의 증가 
+3. 각 클래스 데이터의 균등한 배분 
+4. 하이퍼 파라미터의 변경
+
+정도가 생각나는군요.  
+
+데이터의 갯수를 각 클래스당 160개 씩으로 균등 배분하고, 모델을 변경하여 Training step을 두배로 늘린 결과를 추후에 업데이트 하도록 하겠습니다.  
+
+감사합니다.  

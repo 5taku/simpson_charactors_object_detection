@@ -3,17 +3,17 @@
 해당 튜토리얼은 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool)을 활용해서 진행됩니다.  
 Custom Object Detection Tutorial은 [여기](https://github.com/5taku/custom_object_detection)를 참고하시길 바라겠습니다.  
 
-
 # Table of contents
 1. [The Simpsons Characters Data](#dataset)
-2. [Make csv file](#makecsvfile)
-3. [Make record file](#makerecordfile)
-4. [label map 변경](#changelabelmap)
-4. [Training](#training)
-5. [Test](#test)
-6. [결과 확인](#checkresult)
-7. [결과 분석](#analysisresult)
-8. [TO-DO](#todo)
+2. [Tutorial]
+    1. [Make csv file](#makecsvfile)
+    2. [Make record file](#makerecordfile)
+    3. [label map 변경](#changelabelmap)
+    4. [Training](#training)
+    5. [Test](#test)
+3. [결과 확인](#checkresult)
+4. [결과 분석](#analysisresult)
+5. [TO-DO](#todo)
 
 ## The Simpsons Characters Data <a name="dataset"></a>
 
@@ -33,12 +33,26 @@ tesnorflow object detection api에 활용하기 위하여 필요한 record 내�
 
 따라서 조금의 코딩을 통하여 tensorflow_object_detection_helper_tool을 활용할 수 있도록 해보겠습니다.
 
-## 1. Make csv file <a name="makecsvfile"></a>
+## Tutorial
 
-* annotation.txt 파일을 csv 파일로 변경하는 소스즐 만듭니다. ( simpson_csv.py 파일을 만들었습니다. )    
-  문제는 annotation.txt 파일의 신뢰도가 낮다는 점입니다. ( xmax 보다 xmin이 더 크거나, ymax 보다 ymin이 더 크거나 하는)  
+해당 튜토리얼은 google cloud comute engine 에서 테스트 되었으며 vm의 사양은 다음과 같습니다.
+
+    16 vCPU
+    60gb Ram
+    1 x NVIDIA Tesla P100
+    ubuntu 16.0.4
+    python 2.7.12
+    tensorflow 1.8.0
+    cuda 9.0
+    cudnn 7.1
+
+### 1. Make csv file <a name="makecsvfile"></a>
+
+* annotation.txt 파일을 csv 파일로 변경하는 소스를 만듭니다. ( simpson_csv.py 파일을 만들었습니다. )    
+  문제는 annotation.txt 파일의 신뢰도가 낮다는 점입니다.   
+  ( xmax 보다 xmin이 더 크거나, ymax 보다 ymin이 더 크거나 하는)  
   xmin > xmax , ymin > ymax 인 데이터가 존재하면 training 시 에러가 발생합니다.  
-  xmax - xmin < 30 , ymax - ymin < 30 이면 제외하겠습니다.  
+  xmax - xmin < 30 이거나 ymax - ymin < 30 이면 제외하겠습니다.  
    
    ![error](./doc/img/error_nan_values.jpg) 
    
@@ -101,19 +115,21 @@ simpson_csv.py 를 실행합니다.
 
     python simpson_csv.py
 
-## 2. Make record file <a name="makerecordfile"></a>
+### 2. Make record file <a name="makerecordfile"></a>
 
 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 의 tfgenerator.py를 수행합니다.  
 
 이때, 옵션을 넣습니다.  
 
     python tfgenerator.py -c True -i ./
-    
+
+해당 옵션의 의미는 custom csv 파일을 사용하고, imaage 폴더의 위치는 최상단(./)이라는 의미입니다.      
 record 파일이 생성 됩니다.
 
-## 3. label_map.pbtxt 변경 <a name="changelabelmap"></a>
+### 3. label_map.pbtxt 변경 <a name="changelabelmap"></a>
 
-simpson character class에 맞게 적절하게 labal_map.pbtxt 를 변경합니다.
+simpson character class에 맞게 적절하게 label_map.pbtxt 를 변경합니다.
+( 해당 git의 lebel_map.pbtxt를 복사하셔도 무방합니다.)
 
     item {
       id: 1
@@ -140,7 +156,7 @@ simpson character class에 맞게 적절하게 labal_map.pbtxt 를 변경합니�
       name: 'nelson_muntz'
     }
 
-## 4. Transfer learning , Evaluating , Exporting <a name="training"></a>
+### 4. Transfer learning , Evaluating , Exporting <a name="training"></a>
 
 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 의 main.py를 수행합니다.  
 
@@ -155,7 +171,7 @@ Evaluating 은 5,000번 마다 수행하겠습니다.
 ![folder](./doc/img/log.jpg) 
 ![folder](./doc/img/log_1.jpg) 
     
-## 5. Export model 확인
+### 5. Export model 확인
 
 export_dir 폴더로 이동합니다.
 
@@ -163,7 +179,7 @@ export_dir 폴더로 이동합니다.
 
 ![folder](./doc/img/export.jpg) 
 
-## 6. Test <a name="test"></a>
+### 6. Test <a name="test"></a>
 
 [The Simpsons Characters Data](https://www.kaggle.com/alexattia/the-simpsons-characters-dataset) 의 testset중 레이블이 있는 18명의 캐릭터를 테스트 해보겠습니다.
 각 캐릭터당 10장의 이미지를 테스트 하였습니다.
@@ -228,9 +244,10 @@ IMAGE_SIZE = (12, 8)
 
 ## 결과 확인 <a name="checkresult"></a>
 
+각 캐릭터당 첫번째 테스트 파일에 대한 결과입니다.  
 전체 결과 이미지는 [여기](https://drive.google.com/file/d/12InWG6qac0zG1mMik4Zyz3Wo2Mvhy-7Q/view?usp=sharing) 에서 확인할 수 있습니다.  
 
-##### True Detected sample 
+#### True Detected sample 
 
 ![true](./doc/result_img/true_detect.png) 
 ![true](./doc/result_img/true_detect_1.png) 
@@ -243,14 +260,14 @@ IMAGE_SIZE = (12, 8)
 ![true](./doc/result_img/true_detect_8.png) 
 ![true](./doc/result_img/true_detect_9.png) 
 
-##### Wrong Detected sample 
+#### Wrong Detected sample 
 
 ![Wrong](./doc/result_img/wrong_detect.png) 
 ![Wrong](./doc/result_img/wrong_detect_1.png) 
 ![Wrong](./doc/result_img/wrong_detect_2.png) 
 ![Wrong](./doc/result_img/wrong_detect_3.png) 
 
-##### No Detected sample 
+#### No Detected sample 
 
 ![No](./doc/result_img/no_detect.png) 
 ![No](./doc/result_img/no_detect_1.png) 
@@ -265,7 +282,7 @@ IMAGE_SIZE = (12, 8)
 * 또한 아래 분석은 단지 하나의 추측에 불과합니다.  
   관련하여 잘못된 점에 대한 이야기는 언제든 환영합니다.
 
-![No](./doc/result_img/summary.jpg) 
+![summary](./doc/result_img/summary.jpg) 
 
 트레이닝은 총 5860장의 이미지가 사용되었습니다.  
 
@@ -278,7 +295,7 @@ IMAGE_SIZE = (12, 8)
 대다수의 4% 미만의 데이터의 디텍팅결과는 50% 미만입니다.  
 이중에서 3.2%의 트레이닝 비율이지만 정확도는 60%인 edna_krabappel에 대하여 한번 알아보겠습니다.  
 
-![No](./doc/result_img/edna_krabappel.jpg) 
+![edna_krabappel](./doc/result_img/edna_krabappel.jpg) 
 
 edna_krabappel 캐릭터는 사진에서 보이는 바와 같이, 다른 심슨캐릭보다는 좀더 눈에 띄는 특징이 있습니다.  
 무엇인지 아시겠나요?  
@@ -288,7 +305,7 @@ edna_krabappel 캐릭터는 사진에서 보이는 바와 같이, 다른 심슨�
 
 반대로 charles_montgomery_burns는 9.56%의 높은 이미지 갯수에도 불구하고 정확도는 상당히 떨어집니다.  
 
-![No](./doc/result_img/charles_montgomery_burns.jpg) 
+![charles_montgomery_burns](./doc/result_img/charles_montgomery_burns.jpg) 
 
 시각적으로 보았을땐, 여러가지 특징이 발견되지만 결과가 좋지 않습니다.  
 운이 없게 charles_montgomery_burns의 test 데이터가 판별하기 어려운 데이터 였을수도 있습니다.  

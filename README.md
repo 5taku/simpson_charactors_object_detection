@@ -151,3 +151,100 @@ export_dir 폴더로 이동합니다.
 
 ![folder](./doc/img/export.jpg) 
 
+## 6. Test
+
+[The Simpsons Characters Data](https://www.kaggle.com/alexattia/the-simpsons-characters-dataset) 의 testset중 레이블이 있는 18명의 캐릭터를 테스트 해보겠습니다.
+각 캐릭터당 10장의 이미지를 테스트 하였습니다.
+
+jupyter notebook 을 기동합니다.
+
+    jupyter notebook --ip=* --no-browser
+
+[tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 최상단의 object_detection/object_detection_tutorial.ipynb 파일의 내용을 조금 수정하겠습니다.
+
+#### Variables section
+
+```buildoutcfg
+# What model to download.
+#MODEL_NAME = 'ssd_mobilenet_v1_coco_2017_11_17'
+#MODEL_FILE = MODEL_NAME + '.tar.gz'
+#DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
+
+# Path to frozen detection graph. This is the actual model that is used for the object detection.
+PATH_TO_CKPT = '../export_dir/faster_rcnn_resnet50_coco_2018_01_28/frozen_inference_graph.pb'
+
+# List of the strings that is used to add correct label for each box.
+PATH_TO_LABELS = '../label_map.pbtxt'
+
+NUM_CLASSES = 18
+
+```
+
+#### Download Model section
+
+모델 다운로드는 자동으로 진행되므로, 전부 주석처리 합니다.
+
+```buildoutcfg
+# opener = urllib.request.URLopener()
+# opener.retrieve(DOWNLOAD_BASE + MODEL_FILE, MODEL_FILE)
+# tar_file = tarfile.open(MODEL_FILE)
+# for file in tar_file.getmembers():
+#   file_name = os.path.basename(file.name)
+#   if 'frozen_inference_graph.pb' in file_name:
+#     tar_file.extract(file, os.getcwd())
+```
+
+#### Detection section 
+
+폴더내의 모든 이미지를 가져올수 있도록 코드를 수정합니다.
+
+```buildoutcfg
+# For the sake of simplicity we will use only 2 images:
+# image1.jpg
+# image2.jpg
+# If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
+PATH_TO_TEST_IMAGES_DIR = 'test_images'
+#TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR) ]
+TEST_IMAGE_PATHS = os.listdir(PATH_TO_TEST_IMAGES_DIR)
+
+for i in range(len(TEST_IMAGE_PATHS)):
+    TEST_IMAGE_PATHS[i] = 'test_images/' + TEST_IMAGE_PATHS[i]
+#TEST_IMAGE_PATHS = [os.path.join(PATH_TO_TEST_IMAGES_DIR, i for i in FILE_NAME)]
+print(TEST_IMAGE_PATHS)
+# Size, in inches, of the output images.
+IMAGE_SIZE = (12, 8)
+```
+
+#### 결과 확인
+
+##### True Detected sample 
+
+![true](./doc/result_img/true_detect.png) 
+![true](./doc/result_img/true_detect_1.png) 
+![true](./doc/result_img/true_detect_2.png) 
+![true](./doc/result_img/true_detect_3.png) 
+![true](./doc/result_img/true_detect_4.png) 
+![true](./doc/result_img/true_detect_5.png) 
+![true](./doc/result_img/true_detect_6.png) 
+![true](./doc/result_img/true_detect_7.png) 
+![true](./doc/result_img/true_detect_8.png) 
+![true](./doc/result_img/true_detect_9.png) 
+
+##### Wrong Detected sample 
+
+![Wrong](./doc/result_img/wrong_detect.png) 
+![Wrong](./doc/result_img/wrong_detect_1.png) 
+![Wrong](./doc/result_img/wrong_detect_2.png) 
+![Wrong](./doc/result_img/wrong_detect_3.png) 
+
+##### No Detected sample 
+
+![No](./doc/result_img/no_detect.png) 
+![No](./doc/result_img/no_detect_1.png) 
+![No](./doc/result_img/no_detect_2.png) 
+![No](./doc/result_img/no_detect_3.png) 
+
+#### 결과 분석
+
+![No](./doc/result_img/summary.jpg) 
+

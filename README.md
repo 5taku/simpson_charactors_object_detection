@@ -1,10 +1,21 @@
 # Simpson charactors object detection
 
-Custom Object Detection Tutorial은 [여기]()를 참고하시길 바라겠습니다.
+해당 튜토리얼은 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool)을 활용해서 진행됩니다.  
+Custom Object Detection Tutorial은 [여기]()를 참고하시길 바라겠습니다.  
 
-해당 튜토리얼은 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool)을 활용해서 진행됩니다.
 
-## The Simpsons Characters Data
+# Table of contents
+1. [The Simpsons Characters Data](#dataset)
+2. [Make csv file](#makecsvfile)
+3. [Make record file](#makerecordfile)
+4. [label map 변경](#changelabelmap)
+4. [Training](#training)
+5. [Test](#test)
+6. [결과 확인](#checkresult)
+7. [결과 분석](#analysisresult)
+8. [TO-DO](#todo)
+
+## The Simpsons Characters Data <a name="dataset"></a>
 
 [The Simpsons Characters Data](https://www.kaggle.com/alexattia/the-simpsons-characters-dataset)은 kaggle dataset 에 등록되어 있는 데이터 셋입니다.  
 
@@ -22,7 +33,7 @@ tesnorflow object detection api에 활용하기 위하여 필요한 record 내�
 
 따라서 조금의 코딩을 통하여 tensorflow_object_detection_helper_tool을 활용할 수 있도록 해보겠습니다.
 
-## 1. Make csv file
+## 1. Make csv file <a name="makecsvfile"></a>
 
 * 문제는 annotation.txt 파일의 신뢰도가 낮다는 점입니다. xmin > xmax , ymin > ymax 인 데이터가 존재하면 training 시 에러가 발생합니다.  
    xmax - xmin < 30 , ymax - ymin < 30 이면 제외하겠습니다.
@@ -87,7 +98,7 @@ simpson_csv.py 를 실행합니다.
 
     python simpson_csv.py
 
-## 2. Make record file
+## 2. Make record file <a name="makerecordfile"></a>
 
 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 의 tfgenerator.py를 수행합니다.  
 
@@ -97,7 +108,7 @@ simpson_csv.py 를 실행합니다.
     
 record 파일이 생성 됩니다.
 
-## 3. label_map.pbtxt 변경
+## 3. label_map.pbtxt 변경 <a name="changelabelmap"></a>
 
 simpson character class에 맞게 적절하게 labal_map.pbtxt 를 변경합니다.
 
@@ -126,7 +137,7 @@ simpson character class에 맞게 적절하게 labal_map.pbtxt 를 변경합니�
       name: 'nelson_muntz'
     }
 
-## 4. Transfer learning , Evaluating , Exporting
+## 4. Transfer learning , Evaluating , Exporting <a name="training"></a>
 
 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 의 main.py를 수행합니다.  
 
@@ -149,7 +160,7 @@ export_dir 폴더로 이동합니다.
 
 ![folder](./doc/img/export.jpg) 
 
-## 6. Test
+## 6. Test <a name="test></a>
 
 [The Simpsons Characters Data](https://www.kaggle.com/alexattia/the-simpsons-characters-dataset) 의 testset중 레이블이 있는 18명의 캐릭터를 테스트 해보겠습니다.
 각 캐릭터당 10장의 이미지를 테스트 하였습니다.
@@ -212,7 +223,7 @@ print(TEST_IMAGE_PATHS)
 IMAGE_SIZE = (12, 8)
 ```
 
-#### 결과 확인
+## 결과 확인 <a name="checkresult"></a>
 
 전체 결과 이미지는 [여기](https://drive.google.com/file/d/12InWG6qac0zG1mMik4Zyz3Wo2Mvhy-7Q/view?usp=sharing) 에서 확인할 수 있습니다.  
 
@@ -243,7 +254,7 @@ IMAGE_SIZE = (12, 8)
 ![No](./doc/result_img/no_detect_2.png) 
 ![No](./doc/result_img/no_detect_3.png) 
 
-#### 결과 분석 및 추측
+## 결과 분석 및 추측 <a name="analysisresult"></a>
 
 * 아래 이미지의 True, Wrong, No 는 각각 정확한 라벨링을 한경우 , 잘못된 라벨링을 한경우 , 디텍팅을 하지 못한경우 입니다.  
   널리 알려진 정확도 측정법이 아닌 눈으로 유의미하다고 판단한 자료이므로, 신뢰도 높은 정확도를 측정하려면, 추가 작업이 필요합니다.  
@@ -279,7 +290,7 @@ edna_krabappel 캐릭터는 사진에서 보이는 바와 같이, 다른 심슨�
 시각적으로 보았을땐, 여러가지 특징이 발견되지만 결과가 좋지 않습니다.  
 운이 없게 charles_montgomery_burns의 test 데이터가 판별하기 어려운 데이터 였을수도 있습니다.  
 
-#### TO-DO 정확도 향상
+#### TO-DO 정확도 향상 <a name="todo"></a>
 
 위의 가설이 맞는지 증명하기 위해선, 또 정확도를 향상시키기 위해선 여러 방법이 존재할것입니다.
 

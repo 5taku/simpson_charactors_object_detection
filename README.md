@@ -5,7 +5,7 @@ Custom Object Detection Tutorial은 [여기](https://github.com/5taku/custom_obj
 
 # Table of contents
 1. [The Simpsons Characters Data](#dataset)
-2. [Tutorial]
+2. [Tutorial](tutorial)
     1. [Make csv file](#makecsvfile)
     2. [Make record file](#makerecordfile)
     3. [label map 변경](#changelabelmap)
@@ -33,7 +33,7 @@ tesnorflow object detection api에 활용하기 위하여 필요한 record 내�
 
 따라서 조금의 코딩을 통하여 tensorflow_object_detection_helper_tool을 활용할 수 있도록 해보겠습니다.
 
-## Tutorial
+## Tutorial <a name="tutorial"></a>
 
 해당 튜토리얼은 google cloud comute engine 에서 테스트 되었으며 vm의 사양은 다음과 같습니다.
 

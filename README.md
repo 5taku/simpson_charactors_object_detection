@@ -1,7 +1,7 @@
 # Simpson charactors object detection
 
 해당 튜토리얼은 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool)을 활용해서 진행됩니다.  
-Custom Object Detection Tutorial은 [여기]()를 참고하시길 바라겠습니다.  
+Custom Object Detection Tutorial은 [여기](https://github.com/5taku/custom_object_detection)를 참고하시길 바라겠습니다.  
 
 
 # Table of contents
@@ -35,8 +35,10 @@ tesnorflow object detection api에 활용하기 위하여 필요한 record 내�
 
 ## 1. Make csv file <a name="makecsvfile"></a>
 
-* 문제는 annotation.txt 파일의 신뢰도가 낮다는 점입니다. xmin > xmax , ymin > ymax 인 데이터가 존재하면 training 시 에러가 발생합니다.  
-   xmax - xmin < 30 , ymax - ymin < 30 이면 제외하겠습니다.
+* annotation.txt 파일을 csv 파일로 변경하는 소스즐 만듭니다. ( simpson_csv.py 파일을 만들었습니다. )    
+  문제는 annotation.txt 파일의 신뢰도가 낮다는 점입니다. ( xmax 보다 xmin이 더 크거나, ymax 보다 ymin이 더 크거나 하는)  
+  xmin > xmax , ymin > ymax 인 데이터가 존재하면 training 시 에러가 발생합니다.  
+  xmax - xmin < 30 , ymax - ymin < 30 이면 제외하겠습니다.  
    
    ![error](./doc/img/error_nan_values.jpg) 
    
@@ -77,6 +79,7 @@ for i in range(len(bbox_datas_df)):
           'ymax':bbox_data['ymax']
         })
 
+#sprit 비율은 80%로 고정하였습니다. 변경하려면 이부분을 변경하시면 됩니다.
 rate = len(result)/8.0
 result = result.sample(frac=1)
 train_df = result[int(rate):]
@@ -160,7 +163,7 @@ export_dir 폴더로 이동합니다.
 
 ![folder](./doc/img/export.jpg) 
 
-## 6. Test <a name="test></a>
+## 6. Test <a name="test"></a>
 
 [The Simpsons Characters Data](https://www.kaggle.com/alexattia/the-simpsons-characters-dataset) 의 testset중 레이블이 있는 18명의 캐릭터를 테스트 해보겠습니다.
 각 캐릭터당 10장의 이미지를 테스트 하였습니다.

@@ -5,6 +5,7 @@ from random import shuffle
 bbox_datas = pd.read_csv('./simpson/annotation.txt',header=None)
 bbox_datas_df = pd.DataFrame(bbox_datas)
 
+#Changes the order of columns and sets the name.
 bbox_datas_df = bbox_datas_df[[0,5,1,2,3,4]]
 bbox_datas_df.columns = ['filename','class','xmin','ymin','xmax','ymax']
 

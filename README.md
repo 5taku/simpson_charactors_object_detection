@@ -115,6 +115,8 @@ simpson_csv.py 를 실행합니다.
 
     python simpson_csv.py
 
+__simpson_csv_distribution.py__ 파일은 각 캐릭터 별로 160개씩 동일한 분포로 생성하여 줍니다.
+
 ### 2. Make record file <a name="makerecordfile"></a>
 
 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 의 tfgenerator.py를 수행합니다.  

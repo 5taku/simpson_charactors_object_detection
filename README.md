@@ -17,6 +17,8 @@ Custom Object Detection Tutorial은 [여기](https://github.com/5taku/custom_obj
 
 ## The Simpsons Characters Data <a name="dataset"></a>
 
+![true](./doc/result_img/true_detect_2.png) 
+
 [The Simpsons Characters Data](https://www.kaggle.com/alexattia/the-simpsons-characters-dataset)은 kaggle dataset 에 등록되어 있는 데이터 셋입니다.  
 
 42명의 심슨 캐릭터의 사진이 각 캐릭터당 3 ~ 2000여개씩 존재하며, object detection 을 위한 bbox는 20명의 캐릭터가 200~600개씩 가지고 있습니다.  

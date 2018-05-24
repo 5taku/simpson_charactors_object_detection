@@ -17,6 +17,8 @@ Custom Object Detection Tutorial은 [여기](https://github.com/5taku/custom_obj
 
 ## The Simpsons Characters Data <a name="dataset"></a>
 
+![true](./doc/result_img/true_detect_2.png) 
+
 [The Simpsons Characters Data](https://www.kaggle.com/alexattia/the-simpsons-characters-dataset)은 kaggle dataset 에 등록되어 있는 데이터 셋입니다.  
 
 42명의 심슨 캐릭터의 사진이 각 캐릭터당 3 ~ 2000여개씩 존재하며, object detection 을 위한 bbox는 20명의 캐릭터가 200~600개씩 가지고 있습니다.  
@@ -104,9 +106,8 @@ validate_df.to_csv('./dataset/validate.csv',index=None
 
 simpson_csv.py 파일을 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) Tool 최상단에 위치시킵니다.    
 
-[tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) Tool 최상단에 simpson폴더를 생성한 후,  
-
-The Simpsons Characters Data 의 annotation.txt 파일, 각 캐릭터 폴더를 복사합니다.  
+[tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 최상단에 kaggle에서 다운받은 simpson_dataset 폴더를 복사합니다.    
+또한 annotation.txt 파일을 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 최상단에 위치시킵니다.
 
  ![folder](./doc/img/1.folder_location.jpg) 
  ![folder](./doc/img/1.folder_location2.jpg) 

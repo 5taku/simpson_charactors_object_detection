@@ -1,6 +1,5 @@
 import pandas as pd
 from PIL import Image
-from random import shuffle
 
 bbox_datas = pd.read_csv('./simpson/annotation.txt',header=None)
 bbox_datas_df = pd.DataFrame(bbox_datas)
@@ -16,8 +15,8 @@ for i in range(len(bbox_datas_df)):
 
     if (bbox_data['xmax'] - bbox_data['xmin'] > 30 and bbox_data['ymax'] - bbox_data['ymin'] > 30):
         filename = bbox_data['filename']
-        filename = filename.replace('characters','simpson')
-        filename = filename.replace('simpson2', 'simpson')
+        filename = filename.replace('characters','simpsons_dataset')
+        filename = filename.replace('simpsons_dataset2', 'simpsons_dataset')
 
         im = Image.open(filename)
         width,height = im.size

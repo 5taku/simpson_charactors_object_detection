@@ -106,9 +106,8 @@ validate_df.to_csv('./dataset/validate.csv',index=None
 
 simpson_csv.py 파일을 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) Tool 최상단에 위치시킵니다.    
 
-[tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) Tool 최상단에 simpson폴더를 생성한 후,  
-
-The Simpsons Characters Data 의 annotation.txt 파일, 각 캐릭터 폴더를 복사합니다.  
+[tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 최상단에 kaggle에서 다운받은 simpson_dataset 폴더를 복사합니다.    
+또한 annotation.txt 파일을 [tensorflow_object_detection_helper_tool](https://github.com/5taku/tensorflow_object_detection_helper_tool) 최상단에 위치시킵니다.
 
  ![folder](./doc/img/1.folder_location.jpg) 
  ![folder](./doc/img/1.folder_location2.jpg) 
